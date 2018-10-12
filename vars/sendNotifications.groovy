@@ -29,11 +29,4 @@ def call(String buildStatus = 'STARTED', String ciCdGoal = 'NONE') {
 
     // Send notifications
     slackSend (color: colorCode, message: summary)
-
-    if(buildStatus != 'SUCCESS') {
-        emailext(body: '${DEFAULT_CONTENT}', mimeType: 'text/html',
-                replyTo: '$DEFAULT_REPLYTO', subject: '${DEFAULT_SUBJECT}', attachLog: true,
-                to: emailextrecipients([[$class: 'DevelopersRecipientProvider']]))
-
-    }
 }

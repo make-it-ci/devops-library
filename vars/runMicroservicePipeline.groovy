@@ -38,7 +38,6 @@ def call() {
         return
     }
 
-
     String pipelineName = utils.getMicroservicePipelineName()
 
     if (pipelineName.equals('')) {

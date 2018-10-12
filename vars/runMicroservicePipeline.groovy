@@ -50,7 +50,7 @@ def call() {
     switch (pipelineName) {
         case "docker-microservice-pipeline":
             pipeline {
-                agent { label 'microservice' }
+                agent { label 'swarm' }
 
                 stages {
                     stage('Develop: Initialize') {
@@ -215,7 +215,7 @@ def call() {
 
         case "docker-microservice-prepare-release-pipeline":
             pipeline {
-                agent { label 'microservice' }
+                agent { label 'swarm' }
 
                 stages {
                     stage('Release-Prepare: Validate consistency') {
@@ -295,7 +295,7 @@ def call() {
 
         case "docker-microservice-deploy-pipeline":
             pipeline {
-                agent { label 'microservice' }
+                agent { label 'swarm' }
 
                 stages {
                     stage('Release/Hotfix-Deploy: Initialize') {
@@ -484,7 +484,7 @@ def call() {
 
         case 'docker-microservice-finish-pipeline':
             pipeline {
-                agent { label 'microservice' }
+                agent { label 'swarm' }
 
                 stages {
                     stage('Finish: Initialize') {
@@ -578,7 +578,7 @@ def call() {
 
         case 'docker-microservice-cancel-pipeline':
             pipeline {
-                agent { label 'microservice' }
+                agent { label 'swarm' }
 
                 stages {
                     stage('Release/Hotfix-Cancel: Remove branch') {
@@ -632,7 +632,7 @@ def call() {
 
         case 'docker-microservice-prepare-hotfix-pipeline':
             pipeline {
-                agent { label 'microservice' }
+                agent { label 'swarm' }
 
                 stages {
                     stage('Hotfix-Prepare: Check existing branches') {

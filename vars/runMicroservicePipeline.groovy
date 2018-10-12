@@ -189,9 +189,6 @@ def call() {
                     }
                 }
                 post {
-                    always {
-                        deleteDir()
-                    }
                     success {
                         script {
                             echo "The pipeline ${currentBuild.fullDisplayName} completed successfully."

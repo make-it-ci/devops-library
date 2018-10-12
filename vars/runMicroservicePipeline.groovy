@@ -49,7 +49,9 @@ def call() {
     switch (pipelineName) {
         case "docker-microservice-pipeline":
             pipeline {
-                agent { label 'swarm' }
+                agent {
+                    label 'swarm' image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
+                }
 
                 stages {
                     stage('Develop: Initialize') {
@@ -89,12 +91,12 @@ def call() {
                     }
 
                     stage('Develop: Build Java') {
-                        agent {
+                        /*agent {
                             docker {
                                 image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
                                 reuseNode true
                             }
-                        }
+                        }*/
                         steps {
                             configFileProvider([configFile(fileId: 'maven-nexus-settings', variable: 'MAVEN_SETTINGS')]) {
                                 // build

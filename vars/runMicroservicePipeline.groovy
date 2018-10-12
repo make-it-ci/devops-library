@@ -50,7 +50,7 @@ def call() {
         case "docker-microservice-pipeline":
             pipeline {
                 agent {
-                    label 'swarm' image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
+                    label 'swarm' docker 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
                 }
 
                 stages {

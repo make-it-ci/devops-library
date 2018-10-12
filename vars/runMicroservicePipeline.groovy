@@ -6,7 +6,7 @@ import si.ci.jenkins.Utilities
  *
  * @author: Zvone Gazvoda
  */
-def call(String pipelineName) {
+def call() {
 
     def utils = new Utilities(this)
 
@@ -39,7 +39,7 @@ def call(String pipelineName) {
     }
 
 
-    pipelineName = utils.getMicroservicePipelineName()
+    String pipelineName = utils.getMicroservicePipelineName()
 
     if (pipelineName.equals('')) {
         currentBuild.result = 'NOT_BUILT'

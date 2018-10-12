@@ -50,7 +50,7 @@ def call() {
         case "docker-microservice-pipeline":
             pipeline {
                 agent {
-                    label 'swarm' docker
+                    label 'swarm'
                 }
 
                 stages {

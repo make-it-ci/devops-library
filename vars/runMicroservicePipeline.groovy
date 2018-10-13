@@ -300,8 +300,8 @@ def call() {
 
                                 dockerImageName = "/" + applicationName + "/"
 
-                                dockerPushRegistry = env.RELEASE_DOCKER_PUSH_REGISTRY
-                                dockerPullRegistry = env.RELEASE_DOCKER_PULL_REGISTRY
+                                dockerPushRegistry = env.DOCKER_PUSH_REGISTRY
+                                dockerPullRegistry = env.DOCKER_PULL_REGISTRY
 
                                 pom = readMavenPom file: 'pom.xml'
 

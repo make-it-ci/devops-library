@@ -430,6 +430,7 @@ def call() {
                                     sh "mvn  versions:update-child-modules"
 
                                     sh 'git add .'
+                                    sh 'git reset .ci/docker-compose.yml'
                                     sh "git commit -m 'Bump version for next fix'"
 
                                     sh(script: "git push origin ${env.BRANCH_NAME}", returnStatus: true)

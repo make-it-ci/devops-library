@@ -94,8 +94,6 @@ class Utilities implements Serializable {
 
                     script.print "Commit Message: $commitMsg"
 
-                    script.print "Regex: ${commitMsg.toString() ==~ /.*?\[ci-finish:[a-z0-9]{40}].*?\s/}"
-
                     if (commitMsg.toString().contains('[ci-run]')) {
                         return '[ci-run]'
                     } else if (commitMsg.toString().contains('[ci-release]')) {
@@ -104,9 +102,8 @@ class Utilities implements Serializable {
                         return '[ci-deploy]'
                     } else if (commitMsg.toString().contains('[ci-cancel]')) {
                         return '[ci-cancel]'
-                    } else if (commitMsg.toString() ==~ /.*?\[ci-finish:[a-z0-9]{40}].*?\s/) {
-                        String commitHash = parseCommitMsg(commitMsg)
-                        return "[ci-finish:$commitHash]"
+                    } else if (commitMsg.toString().contains('[ci-finish]')) {
+                        return "[ci-finish]"
                     } else if (commitMsg.toString().contains('[ci-hotfix]')) {
                         return '[ci-hotfix]'
                     } else if (commitMsg.toString().contains('[ci-lib]')) {

@@ -480,12 +480,6 @@ def call() {
 
                     stage('Finish: Tag and merge') {
 
-                        agent {
-                            docker {
-                                image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
-                                reuseNode true
-                            }
-                        }
                         steps {
                             configFileProvider([configFile(fileId: 'maven-nexus-settings', variable: 'MAVEN_SETTINGS')]) {
                                 // build
@@ -504,23 +498,24 @@ def call() {
 
                                                     utils.checkConsistency('Finish: Tag and merge', "1")
 
-                                                    isReleaseChanged = 0
+                                                    //isReleaseChanged = 0
 
-                                                    deployCommit = utils.parseCommitMsg(env.CICDGOAL)
+                                                    //deployCommit = utils.parseCommitMsg(env.CICDGOAL)
 
-                                                    echo "Deploy commitId: $deployCommit"
+                                                    //echo "Deploy commitId: $deployCommit"
                                                     echo "Third last commitId: $thirdLastCommit"
 
-                                                    isReleaseChanged = (deployCommit != thirdLastCommit)
+                                                    //isReleaseChanged = (deployCommit != thirdLastCommit)
 
-                                                    isDeployCommit = utils.isDeployCommit(deployCommit)
+                                                    isDeployCommit = utils.isDeployCommit(thirdLastCommit)
 
-                                                    if (isReleaseChanged || !isDeployCommit) {
+                                                    //if (isReleaseChanged || !isDeployCommit) {
+                                                    if (!isDeployCommit) {
                                                         currentBuild.result = 'FAILURE'
                                                         error('Aborting release! The release branch was changed after the release artifact was built or [ci-deploy] was not executed before [ci-finish].')
                                                     }
 
-                                                    utils.finalizeRelease(env.BRANCH_NAME, mavenVersion, deployCommit)
+                                                    utils.finalizeRelease(env.BRANCH_NAME, mavenVersion, thirdLastCommit)
 
                                                 }
                                     } else {

@@ -76,7 +76,7 @@ def call() {
 
                                 commiter = utils.getCommiter()
                                 echo "Commiter: " + commiter
-                                
+
                                 if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith("hotfix")) {
                                     applicationVersion = utils.getDockerTag(pom.version)
                                     if (env.BRANCH_NAME.startsWith('hotfix')) {
@@ -179,14 +179,13 @@ def call() {
                                     dockerCompose = dockerCompose.replace("\${IMAGE_NAME}", dockerPullRegistry + dockerImageName)
                                     writeFile file: "docker-compose.yml", text: dockerCompose, encoding: 'UTF-8'
 
+
+                                    //Deploy to Docker Swarm:
+                                    sh '''
+                                        docker stack deploy -c docker-compose.yml ${applicationName}
+                                      '''
                                 }
                             }
-
-                            //script {
-
-                                // Deploy to UAT
-
-                            //}
                         }
                     }
                 }
@@ -399,9 +398,11 @@ def call() {
                                 dockerImageName = dockerImageName + applicationVersion
                                 def dockerImage = docker.build(dockerPushRegistry + dockerImageName)
 
-                                dockerImage.push()
-                                if (env.BRANCH_NAME.startsWith('release'))
-                                    dockerImage.push('latest')
+                                docker.withRegistry('https://nexus-ci.kumuluz.com', 'nexus-ci-zvoneg') {
+                                    dockerImage.push()
+                                    if (env.BRANCH_NAME.startsWith('release'))
+                                        dockerImage.push('latest')
+                                }
                             }
                         }
                     }

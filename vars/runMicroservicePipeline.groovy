@@ -641,12 +641,6 @@ def call() {
                         }
                     }
                     stage('Hotfix-Prepare: Create hotfix branch') {
-                        agent {
-                            docker {
-                                image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
-                                reuseNode true
-                            }
-                        }
                         steps {
                             configFileProvider([configFile(fileId: 'maven-nexus-settings', variable: 'MAVEN_SETTINGS')]) {
                                 // build

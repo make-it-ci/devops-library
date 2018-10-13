@@ -220,7 +220,7 @@ class Utilities implements Serializable {
             return'docker-microservice-deploy-pipeline'
         } else if (script.env.CICDGOAL == '[ci-cancel]' && (script.env.BRANCH_NAME.startsWith('release') || script.env.BRANCH_NAME.startsWith('hotfix'))) {
             return 'docker-microservice-cancel-pipeline'
-        } else if (script.env.CICDGOAL ==~ /\[ci-finish:[a-z0-9]{40}]/ && (script.env.BRANCH_NAME.startsWith('release') || script.env.BRANCH_NAME.startsWith('hotfix'))) {
+        } else if (script.env.CICDGOAL == '[ci-finish]' && (script.env.BRANCH_NAME.startsWith('release') || script.env.BRANCH_NAME.startsWith('hotfix'))) {
             return 'docker-microservice-finish-pipeline'
         } else if (script.env.CICDGOAL == '[ci-hotfix]' && script.env.BRANCH_NAME == 'develop') {
             return 'docker-microservice-prepare-hotfix-pipeline'

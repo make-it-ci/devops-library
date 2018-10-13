@@ -394,14 +394,14 @@ def call() {
                         }
                     }
 
-                    stage('Publish to UrbanCode') {
+                    stage('Release/Hotfix-Deploy: Deploy to Docker Swarm') {
                         steps {
                             // update docker-compose.yml
                             script {
                                 def dockerComposeYml = 'docker-compose.yml'
 
-                                dir('digital-devops/' + applicationName + "_" + dockerServiceName) {
-                                    git branch: 'master', url: utils.getGitHost() + '/digital-devops/' + applicationName + "_" + dockerServiceName + '.git', credentialsId: gitCredentialsId
+                                //dir('digital-devops/' + applicationName + "_" + dockerServiceName) {
+                                //    git branch: 'master', url: utils.getGitHost() + '/digital-devops/' + applicationName + "_" + dockerServiceName + '.git', credentialsId: gitCredentialsId
 
                                     dir('.ci') {
                                         if (!fileExists(dockerComposeYml)) {
@@ -419,26 +419,16 @@ def call() {
                                         dockerCompose = dockerCompose.replace("\${IMAGE_NAME}", dockerPullRegistry + dockerImageName)
                                         writeFile file: "docker-compose.yml", text: dockerCompose, encoding: 'UTF-8'
                                     }
-                                }
+                                //}
                             }
                         }
                     }
 
                     stage("Release/Hotfix-Deploy: Bump version on release/hotfix branch") {
-                        agent {
-                            docker {
-                                image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
-                                reuseNode true
-                            }
-                        }
                         steps {
                             configFileProvider([configFile(fileId: 'maven-nexus-settings', variable: 'MAVEN_SETTINGS')]) {
 
                                 script {
-
-                                    dir('/digital-devops') {
-                                        deleteDir()
-                                    }
 
                                     mavenVersion = utils.increasePatchVersion(mavenVersion)
                                     sh "mvn  versions:set -DnewVersion=$mavenVersion"

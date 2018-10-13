@@ -179,17 +179,8 @@ def call() {
                                     dockerCompose = dockerCompose.replace("\${IMAGE_NAME}", dockerPullRegistry + dockerImageName)
                                     writeFile file: "docker-compose.yml", text: dockerCompose, encoding: 'UTF-8'
 
-
                                     //Deploy to Docker Swarm:
-                                    sh """
-                                          SERVICES=\$(docker service ls --filter name=${dockerServiceName} --quiet | wc -l)
-                                          if [[ "\$SERVICES" -eq 0 ]]; then
-                                            docker network rm ${dockerServiceName}-network || true
-                                            docker network create --driver overlay --attachable ${dockerServiceName}-network
-                                          fi
-                                          
-                                          docker stack deploy -c docker-compose.yml ${dockerServiceName}
-                                       """
+                                    sh "docker stack deploy -c docker-compose.yml ${dockerServiceName}"
                                 }
                             }
                         }
@@ -246,12 +237,6 @@ def call() {
                     }
 
                     stage('Release-Prepare: Create release branch') {
-                        agent {
-                            docker {
-                                image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
-                                reuseNode true
-                            }
-                        }
                         steps {
                             configFileProvider([configFile(fileId: 'maven-nexus-settings', variable: 'MAVEN_SETTINGS')]) {
                                 // build
@@ -381,12 +366,7 @@ def call() {
                                         echo "No test report files were found. Skipping publishing of test reports."
                                     }
 
-                                    try {
-                                        sh "mvn -U -s $MAVEN_SETTINGS -Dbuild.date=\"$buildDate\" -Dgit.commit=\"$lastCommit\"  deploy"
-                                    } catch (err) {
-                                        echo 'Maven deploy failed. Assuming lib module already deployed. Retrying the rest fo modules.'
-                                        sh "mvn -U -s $MAVEN_SETTINGS -Dbuild.date=\"$buildDate\" -Dgit.commit=\"$lastCommit\"  deploy -Pother"
-                                    }
+                                    sh "mvn -U -s $MAVEN_SETTINGS -Dbuild.date=\"$buildDate\" -Dgit.commit=\"$lastCommit\"  deploy"
 
                                     stash includes: '**/target/**/*', name: 'target'
                                 }

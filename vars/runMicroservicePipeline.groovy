@@ -146,9 +146,11 @@ def call() {
                                 dockerImageName = dockerImageName + applicationVersion
                                 def dockerImage = docker.build(dockerPushRegistry + dockerImageName)
 
-                                dockerImage.push()
-                                if (env.BRANCH_NAME == "develop") {
-                                    dockerImage.push('latest')
+                                docker.withRegistry('https://nexus-ci.kumuluz.com', 'nexus-ci-zvoneg') {
+                                    dockerImage.push()
+                                    if (env.BRANCH_NAME == "develop") {
+                                        dockerImage.push('latest')
+                                    }
                                 }
                             }
                         }

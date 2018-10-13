@@ -88,7 +88,7 @@ class Utilities implements Serializable {
                 }
 
                 script.dir(path_mirror) {
-                    script.sh("git fetch origin $branch:$branch")
+                    script.sh("git fetch -f origin $branch:$branch")
                     script.sh("git symbolic-ref HEAD refs/heads/$branch")
                     def commitMsg = script.sh(script: "git log -1 --pretty=%s", returnStdout: true)
 

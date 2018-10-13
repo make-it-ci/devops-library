@@ -13,7 +13,7 @@ def call() {
     def buildDate = new Date()
 
     String dockerImageName = ''
-    String ucdComponentName = ''
+    String dockerServiceName = ''
     String applicationName = ''
     String applicationVersion = ''
 
@@ -68,7 +68,7 @@ def call() {
 
                                 pom = readMavenPom file: 'pom.xml'
 
-                                ucdComponentName = pom.artifactId
+                                dockerServiceName = pom.artifactId
 
                                 dockerImageName = dockerImageName + pom.artifactId + ":"
 
@@ -181,9 +181,8 @@ def call() {
 
 
                                     //Deploy to Docker Swarm:
-                                    sh '''
-                                        docker stack deploy -c docker-compose.yml ${applicationName}
-                                      '''
+                                    sh " docker stack deploy -c docker-compose.yml ${dockerServiceName}"
+
                                 }
                             }
                         }
@@ -314,7 +313,7 @@ def call() {
 
                                 pom = readMavenPom file: 'pom.xml'
 
-                                ucdComponentName = pom.artifactId
+                                dockerServiceName = pom.artifactId
 
                                 dockerImageName = dockerImageName + pom.artifactId + ":"
 
@@ -413,8 +412,8 @@ def call() {
                             script {
                                 def dockerComposeYml = 'docker-compose.yml'
 
-                                dir('digital-devops/' + applicationName + "_" + ucdComponentName) {
-                                    git branch: 'master', url: utils.getGitHost() + '/digital-devops/' + applicationName + "_" + ucdComponentName + '.git', credentialsId: gitCredentialsId
+                                dir('digital-devops/' + applicationName + "_" + dockerServiceName) {
+                                    git branch: 'master', url: utils.getGitHost() + '/digital-devops/' + applicationName + "_" + dockerServiceName + '.git', credentialsId: gitCredentialsId
 
                                     dir('.ci') {
                                         if (!fileExists(dockerComposeYml)) {

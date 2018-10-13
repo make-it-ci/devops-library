@@ -339,13 +339,6 @@ def call() {
                     }
 
                     stage('Release/Hotfix-Deploy: Build Java') {
-
-                        agent {
-                            docker {
-                                image 'nexus-ci.kumuluz.com/maven-git-alpine:1.0.0'
-                                reuseNode true
-                            }
-                        }
                         steps {
                             configFileProvider([configFile(fileId: 'maven-nexus-settings', variable: 'MAVEN_SETTINGS')]) {
                                 // build
@@ -418,6 +411,8 @@ def call() {
 
                                         dockerCompose = dockerCompose.replace("\${IMAGE_NAME}", dockerPullRegistry + dockerImageName)
                                         writeFile file: "docker-compose.yml", text: dockerCompose, encoding: 'UTF-8'
+
+                                        sh "docker stack deploy -c docker-compose.yml ${dockerServiceName}"
                                     }
                                 //}
                             }

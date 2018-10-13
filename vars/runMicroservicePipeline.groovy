@@ -182,10 +182,10 @@ def call() {
 
                                     //Deploy to Docker Swarm:
                                     sh """
-                                          SERVICES=\$(docker service ls --filter name=\${dockerServiceName} --quiet | wc -l)
-                                          if [[ "\$SERVICES" -eq 0 ]]; then
-                                            docker network rm \${dockerServiceName}-network || true
-                                            docker network create --driver overlay --attachable \${dockerServiceName}-network
+                                          SERVICES=\$(docker service ls --filter name=${dockerServiceName} --quiet | wc -l)
+                                          if [[ "$SERVICES" -eq 0 ]]; then
+                                            docker network rm ${dockerServiceName}-network || true
+                                            docker network create --driver overlay --attachable ${dockerServiceName}-network
                                           fi
                                           
                                           docker stack deploy -c docker-compose.yml \${dockerServiceName}

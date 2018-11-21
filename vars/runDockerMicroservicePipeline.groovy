@@ -72,7 +72,7 @@ def call() {
                         // build
                         script {
 
-                            sh 'mvn -U -s $MAVEN_SETTINGS clean package'
+                            sh 'mvn -U -s $MAVEN_SETTINGS clean org.jacoco:jacoco-maven-plugin:0.8.2:prepare-agent package'
 
                             try {
                                 junit '**/target/surefire-reports/*.xml'

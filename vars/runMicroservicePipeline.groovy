@@ -2,7 +2,7 @@ import si.ci.jenkins.Constants
 import si.ci.jenkins.Utilities
 
 /**
- * Start pipeline based on pipelineName
+ * Library implementing microservice pipelines
  *
  * @author: Zvone Gazvoda
  */

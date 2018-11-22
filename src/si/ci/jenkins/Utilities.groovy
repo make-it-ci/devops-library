@@ -243,7 +243,7 @@ class Utilities implements Serializable {
                 sendNotifications 'UNSTABLE', script.env.CICDGOAL
                 break
             case 'FAILED':
-                echo "The pipeline ${script.currentBuild.fullDisplayName} failed."
+                script.echo "The pipeline ${script.currentBuild.fullDisplayName} failed."
                 sendNotifications 'FAILED', script.env.CICDGOAL
                 break
         }

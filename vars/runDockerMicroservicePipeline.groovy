@@ -145,7 +145,9 @@ def call() {
             }
         }
         post {
-            utils.postJob()
+            script {
+                utils.postJob()
+            }
         }
     }
 }

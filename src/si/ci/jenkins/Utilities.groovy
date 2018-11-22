@@ -236,15 +236,15 @@ class Utilities implements Serializable {
         switch (status) {
             case 'SUCCESS':
                 script.echo "The pipeline ${script.currentBuild.fullDisplayName} completed successfully."
-                sendNotifications 'SUCCESS', script.env.CICDGOAL
+                script.sendNotifications 'SUCCESS', script.env.CICDGOAL
                 break
             case 'UNSTABLE':
                 script.echo "The pipeline ${script.currentBuild.fullDisplayName} is unstable."
-                sendNotifications 'UNSTABLE', script.env.CICDGOAL
+                script.sendNotifications 'UNSTABLE', script.env.CICDGOAL
                 break
             case 'FAILED':
                 script.echo "The pipeline ${script.currentBuild.fullDisplayName} failed."
-                sendNotifications 'FAILED', script.env.CICDGOAL
+                script.sendNotifications 'FAILED', script.env.CICDGOAL
                 break
         }
     }

@@ -230,4 +230,22 @@ class Utilities implements Serializable {
             return ''
         }
     }
+
+    def postJob(commiter){
+        script.always {
+            script.deleteDir()
+        }
+        script.success {
+                script.echo "The pipeline ${script.currentBuild.fullDisplayName} completed successfully."
+                sendNotifications 'SUCCESS', "${script.env.CICDGOAL} from ${commiter}"
+        }
+        script.unstable {
+                script.echo "The pipeline ${script.currentBuild.fullDisplayName} is unstable."
+                sendNotifications 'UNSTABLE', script.env.CICDGOAL
+        }
+        script.failure {
+                script.echo "The pipeline ${script.currentBuild.fullDisplayName} failed."
+                sendNotifications 'FAILED', "${script.env.CICDGOAL} from ${commiter}"
+        }
+    }
 }

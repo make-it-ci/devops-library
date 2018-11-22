@@ -145,27 +145,7 @@ def call() {
             }
         }
         post {
-            always {
-                deleteDir()
-            }
-            success {
-                script {
-                    echo "The pipeline ${currentBuild.fullDisplayName} completed successfully."
-                    sendNotifications 'SUCCESS', "${env.CICDGOAL} from ${commiter}"
-                }
-            }
-            unstable {
-                script {
-                    echo "The pipeline ${currentBuild.fullDisplayName} is unstable."
-                    sendNotifications 'UNSTABLE', env.CICDGOAL
-                }
-            }
-            failure {
-                script {
-                    echo "The pipeline ${currentBuild.fullDisplayName} failed."
-                    sendNotifications 'FAILED', "${env.CICDGOAL} from ${commiter}"
-                }
-            }
+            utils.postJob()
         }
     }
 }

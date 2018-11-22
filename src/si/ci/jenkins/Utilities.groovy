@@ -217,7 +217,7 @@ class Utilities implements Serializable {
         } else if (script.env.CICDGOAL == '[ci-release]' && script.env.BRANCH_NAME == 'develop') {
             return 'docker-microservice-prepare-release-pipeline'
         } else if (script.env.CICDGOAL == '[ci-deploy]' && (script.env.BRANCH_NAME.startsWith('release') || script.env.BRANCH_NAME.startsWith('hotfix'))) {
-            return'docker-microservice-deploy-pipeline'
+            return 'docker-microservice-deploy-pipeline'
         } else if (script.env.CICDGOAL == '[ci-cancel]' && (script.env.BRANCH_NAME.startsWith('release') || script.env.BRANCH_NAME.startsWith('hotfix'))) {
             return 'docker-microservice-cancel-pipeline'
         } else if (script.env.CICDGOAL == '[ci-finish]' && (script.env.BRANCH_NAME.startsWith('release') || script.env.BRANCH_NAME.startsWith('hotfix'))) {
@@ -225,27 +225,27 @@ class Utilities implements Serializable {
         } else if (script.env.CICDGOAL == '[ci-hotfix]' && script.env.BRANCH_NAME == 'develop') {
             return 'docker-microservice-prepare-hotfix-pipeline'
         } else if (script.env.CICDGOAL == '[ci-lib]') {
-             return 'docker-microservice-lib-pipeline'
+            return 'docker-microservice-lib-pipeline'
         } else {
             return ''
         }
     }
 
-    def postJob(commiter){
-        script.always {
-            script.deleteDir()
-        }
-        script.success {
+    def postJob(status) {
+
+        switch (status) {
+            case 'SUCCESS':
                 script.echo "The pipeline ${script.currentBuild.fullDisplayName} completed successfully."
-                sendNotifications 'SUCCESS', "${script.env.CICDGOAL} from ${commiter}"
-        }
-        script.unstable {
+                sendNotifications 'SUCCESS', script.env.CICDGOAL
+                break
+            case 'UNSTABLE':
                 script.echo "The pipeline ${script.currentBuild.fullDisplayName} is unstable."
                 sendNotifications 'UNSTABLE', script.env.CICDGOAL
-        }
-        script.failure {
-                script.echo "The pipeline ${script.currentBuild.fullDisplayName} failed."
-                sendNotifications 'FAILED', "${script.env.CICDGOAL} from ${commiter}"
+                break
+            case 'FAILED':
+                echo "The pipeline ${script.currentBuild.fullDisplayName} failed."
+                sendNotifications 'FAILED', script.env.CICDGOAL
+                break
         }
     }
 }

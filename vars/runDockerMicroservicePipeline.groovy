@@ -145,8 +145,23 @@ def call() {
             }
         }
         post {
-            script {
-                utils.postJob()
+            always {
+                deleteDir()
+            }
+            success {
+                script {
+                    utils.postJob('SUCCESS')
+                }
+            }
+            unstable {
+                script {
+                    utils.postJob('UNSTABLE')
+                }
+            }
+            failure {
+                script {
+                    utils.postJob('FAILED')
+                }
             }
         }
     }

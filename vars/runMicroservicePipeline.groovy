@@ -468,7 +468,7 @@ def call() {
                         steps {
                             script {
                                 // last commit triggered the following build - dummy commit to trigger finish
-                                thirdLastCommit = utils.getThirdLastCommit()
+                                beforeLastCommit = utils.getBeforeLastCommit()
 
                                 pom = readMavenPom file: 'pom.xml'
 
@@ -503,11 +503,11 @@ def call() {
                                                     //deployCommit = utils.parseCommitMsg(env.CICDGOAL)
 
                                                     //echo "Deploy commitId: $deployCommit"
-                                                    echo "Third last commitId: $thirdLastCommit"
+                                                    echo "Third last commitId: $beforeLastCommit"
 
                                                     //isReleaseChanged = (deployCommit != thirdLastCommit)
 
-                                                    isDeployCommit = utils.isDeployCommit(thirdLastCommit)
+                                                    isDeployCommit = utils.isDeployCommit(beforeLastCommit)
 
                                                     //if (isReleaseChanged || !isDeployCommit) {
                                                     if (!isDeployCommit) {

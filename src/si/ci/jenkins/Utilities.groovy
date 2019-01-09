@@ -51,7 +51,7 @@ class Utilities implements Serializable {
     }
 
     String getGitRepository() {
-        return script.scm.getUserRemoteConfigs()[0].getUrl() - 'https://'
+        return script.scm.getUserRemoteConfigs()[0].getUrl() - 'http://'
     }
 
     String getGitRepositoryName() {
@@ -80,7 +80,7 @@ class Utilities implements Serializable {
 
                 script.GIT_PASSWORD = URLEncoder.encode(script.GIT_PASSWORD, "UTF-8")
 
-                url = "https://${script.GIT_USERNAME}:${script.GIT_PASSWORD}@$url"
+                url = "http://${script.GIT_USERNAME}:${script.GIT_PASSWORD}@$url"
 
                 if (!script.fileExists(path_mirror)) {
                     script.echo "Directory $path_mirror doesn't exist, creating.."

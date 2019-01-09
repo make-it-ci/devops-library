@@ -22,7 +22,7 @@ def call() {
 
     String mavenVersion = ''
 
-    String gitCredentialsId = Constants.GITHUB_DEVOPS_USER_ID
+    String gitCredentialsId = Constants.GITLAB_DEVOPS_USER_ID
     String commiter = ''
 
     env.CICDGOAL = ''

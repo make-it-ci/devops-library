@@ -226,7 +226,7 @@ def call() {
 
                                             GIT_PASSWORD = URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 
-                                            sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                            sh "git remote set-url origin http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
                                             sh "git config user.email 'zvone.gazvoda@cloud.si'"
                                             sh "git config user.name ${GIT_USERNAME}"
 
@@ -248,12 +248,12 @@ def call() {
 
                                             GIT_PASSWORD = URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 
-                                            print "https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                            print "http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
 
                                             sh "git config user.email 'zvone.gazvoda@cloud.si'"
                                             sh "git config user.name ${GIT_USERNAME}"
 
-                                            sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                            sh "git remote set-url origin http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
 
                                             sh "mvn -B -s $MAVEN_SETTINGS  gitflow:release-start -DargLine=\"-s $MAVEN_SETTINGS\" -DpushRemote=true -DversionDigitToIncrement=1 -DinstallProject=true -DcommitDevelopmentVersionAtStart=true -Dverbose=true"
                                         }
@@ -328,7 +328,7 @@ def call() {
 
                                             GIT_PASSWORD = URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 
-                                            sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                            sh "git remote set-url origin http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
                                             sh "git config user.email 'zvone.gazvoda@cloud.si'"
                                             sh "git config user.name ${GIT_USERNAME}"
 
@@ -491,7 +491,7 @@ def call() {
 
                                                     GIT_PASSWORD = URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 
-                                                    sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                                    sh "git remote set-url origin http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
 
                                                     sh "git config user.email 'zvone.gazvoda@cloud.si'"
                                                     sh "git config user.name ${GIT_USERNAME}"
@@ -563,7 +563,7 @@ def call() {
 
                                                 sh "git config http.sslVerify false"
 
-                                                sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                                sh "git remote set-url origin http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
 
                                                 print "Removing branch: $env.BRANCH_NAME"
 
@@ -633,12 +633,12 @@ def call() {
 
                                             GIT_PASSWORD = URLEncoder.encode(GIT_PASSWORD, "UTF-8")
 
-                                            print "https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                            print "http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
 
                                             sh "git config user.email 'zvone.gazvoda@cloud.si'"
                                             sh "git config user.name ${GIT_USERNAME}"
 
-                                            sh "git remote set-url origin https://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
+                                            sh "git remote set-url origin http://${GIT_USERNAME}:${GIT_PASSWORD}@${utils.getGitRepository()}"
 
                                             sh 'mvn -B -s $MAVEN_SETTINGS  gitflow:hotfix-start -DargLine=\"-s $MAVEN_SETTINGS\" -DpushRemote=true -DinstallProject=true -Dverbose=true'
                                         }
